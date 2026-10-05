@@ -1,0 +1,8 @@
+QWidget { font-size: 14px; }
+QPushButton { padding: 6px 14px; border-radius: 6px; border: 1px solid #b0b7c3; }
+QPushButton:hover { background: #e8f0fe; }
+QPushButton:disabled { color: #999; }
+#primaryButton { background: #2563eb; color: white; border: none; }
+#primaryButton:hover { background: #1d4ed8; }
+#totalsLabel { font-weight: 600; padding: 4px 0; }
+#tipPanel { border: 1px solid #c9d1dc; border-radius: 8px; padding: 10px; background: #f0fdf4; color: #14532d; }
