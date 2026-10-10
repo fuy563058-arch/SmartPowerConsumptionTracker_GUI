@@ -146,7 +146,7 @@ If the database file is ever corrupted, the app moves it aside as a backup and c
 | `screenshots/appliances.png` | The Appliances page with the form, the rate box and the list |
 | `screenshots/add.png` | Adding a new appliance |
 | `screenshots/rate.png` | Choosing a rate and the "Not applied yet" note before clicking Apply Rate |
-| `screenshots/validation.png` | The error message when the input is not valid |
+| `<img width="731" height="229" alt="Image" src="https://github.com/user-attachments/assets/df509f11-3c13-4d38-8592-7bcd19b26f87" />` | The error message when the input is not valid |
 
 ## 11. Testing
 
