@@ -187,5 +187,5 @@ If the database file is ever corrupted, the app moves it aside as a backup and c
 
 ## 13. Author
 
-- **Name:** _[Your name]_
-- **Section:** _[Your section]_
+- **Name:** Floro Jerome A. Uy
+- **Section:** CS26L(3581)
