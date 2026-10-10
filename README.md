@@ -142,10 +142,10 @@ If the database file is ever corrupted, the app moves it aside as a backup and c
 
 | Screenshot | What it shows |
 |---|---|
-| `screenshots/dashboard.png` | The Dashboard with the overall totals, the table and the suggestion box |
-| `screenshots/appliances.png` | The Appliances page with the form, the rate box and the list |
-| `screenshots/add.png` | Adding a new appliance |
-| `screenshots/rate.png` | Choosing a rate and the "Not applied yet" note before clicking Apply Rate |
+| <img width="1363" height="719" alt="Image" src="https://github.com/user-attachments/assets/874377c3-8191-41ea-9c16-bc0b7984ec24" /> | The Dashboard with the overall totals, the table and the suggestion box |
+| <img width="1357" height="686" alt="Image" src="https://github.com/user-attachments/assets/0fd51156-cba0-4b6d-ba86-ebeafccf0fe2" /> | The Appliances page with the form, the rate box and the list |
+| <img width="655" height="350" alt="Image" src="https://github.com/user-attachments/assets/4a8e8f10-4910-4bcb-ae54-213e49cab664" />| Adding a new appliance |
+| <img width="526" height="229" alt="Image" src="https://github.com/user-attachments/assets/1fdffa15-a2c9-49e2-8e1b-59ec9bc837fa" /> | Choosing a rate and the "Not applied yet" note before clicking Apply Rate |
 | <img width="731" height="229" alt="Screenshot 2026-10-10 225906" src="https://github.com/user-attachments/assets/77275caf-0f47-4d3e-8429-a9d7b9bd01d4" /> | The error message when the input is not valid |
 
 ## 11. Testing
