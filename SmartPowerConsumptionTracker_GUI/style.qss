@@ -1,0 +1,74 @@
+/* ===== Smart Power Tracker theme =====
+   blue = main color, teal = power, orange = cost, green = update, red = delete */
+
+QWidget { font-size: 14px; color: #1e293b; }
+#applianceView, #dashboardView { background: #f1f5fb; }
+
+/* ---------- tabs ---------- */
+QTabWidget::pane { border: 1px solid #cfd8e6; top: -1px; }
+QTabBar::tab { padding: 9px 24px; margin-right: 2px; background: #dbe6f7; color: #334155;
+               border-top-left-radius: 6px; border-top-right-radius: 6px; }
+QTabBar::tab:hover:!selected { background: #c7d8f2; }
+QTabBar::tab:selected { background: #2563eb; color: white; font-weight: 600; }
+
+/* ---------- titles and text ---------- */
+#pageTitle { font-size: 22px; font-weight: 700; color: #1e3a8a; padding: 2px 0; }
+#totalsLabel { font-weight: 600; color: #1d4ed8; padding: 4px 0; }
+#tipPanel { border: 1px solid #f3c969; border-left: 5px solid #f59e0b; border-radius: 6px;
+            padding: 10px; background: #fff8e6; color: #5b3a00; }
+
+/* ---------- group boxes ---------- */
+QGroupBox { background: white; border: 1px solid #cfd8e6; border-radius: 8px;
+            margin-top: 14px; padding: 14px 10px 10px 10px; }
+QGroupBox::title { subcontrol-origin: margin; left: 12px; padding: 0 6px; color: #1d4ed8;
+                   background: #f1f5fb; }
+
+/* ---------- inputs ---------- */
+QLineEdit, QComboBox, QDoubleSpinBox { background: white; border: 1px solid #b6c4da;
+                                       border-radius: 5px; padding: 4px 6px; }
+QLineEdit:focus, QComboBox:focus, QDoubleSpinBox:focus { border: 1px solid #2563eb; }
+
+/* ---------- buttons ---------- */
+QPushButton { padding: 7px 14px; border-radius: 6px; border: 1px solid #b6c4da; background: white; }
+QPushButton:hover { background: #e8f0fe; }
+#primaryButton { background: #2563eb; color: white; border: none; font-weight: 600; }
+#primaryButton:hover { background: #1d4ed8; }
+#updateButton { background: #0d9488; color: white; border: none; font-weight: 600; }
+#updateButton:hover { background: #0f766e; }
+#deleteButton { background: #dc2626; color: white; border: none; font-weight: 600; }
+#deleteButton:hover { background: #b91c1c; }
+QPushButton:disabled, #updateButton:disabled, #deleteButton:disabled {
+    background: #e5e9f0; color: #9aa4b2; border: 1px solid #d5dbe5; }
+
+/* ---------- table ---------- */
+QTableWidget { background: white; alternate-background-color: #eef4ff; gridline-color: #dbe4f3;
+               border: 1px solid #cfd8e6; selection-background-color: #bfdbfe; selection-color: #0f172a; }
+QHeaderView::section { background: #2563eb; color: white; font-weight: 600; padding: 6px;
+                       border: none; border-right: 1px solid #1d4ed8; }
+
+/* ---------- dashboard totals ---------- */
+#totalCaption { color: #64748b; font-size: 12px; }
+#valPower  { color: #0d9488; font-size: 20px; font-weight: 700; }   /* wattage, hours */
+#valEnergy { color: #2563eb; font-size: 20px; font-weight: 700; }   /* kWh */
+#valCost   { color: #ea580c; font-size: 20px; font-weight: 700; }   /* pesos */
+
+/* ---------- hints and small headings ---------- */
+#hintLabel { color: #64748b; font-size: 12px; }
+#sectionLabel { font-weight: 600; color: #1e3a8a; padding-top: 4px; }
+
+/* ---------- apply rate / overall suggestion ---------- */
+#applyButton { background: #2563eb; color: white; border: none; font-weight: 600; }
+#applyButton:hover { background: #1d4ed8; }
+#applyButton:disabled { background: #e5e9f0; color: #9aa4b2; border: 1px solid #d5dbe5; }
+#pendingLabel { color: #b45309; font-size: 12px; font-weight: 600; }
+#suggestButton { background: #f59e0b; color: #3b2600; border: none; font-weight: 600; }
+#suggestButton:hover { background: #d98a06; }
+
+/* ---------- pop-up messages (readable in Windows dark mode and light mode) ---------- */
+QMessageBox { background-color: #1e293b; }
+QMessageBox QLabel { color: white; background: transparent; }
+
+/* drop-down lists and tooltips: always dark text on a light background */
+QComboBox QAbstractItemView { background: white; color: #1e293b;
+                              selection-background-color: #bfdbfe; selection-color: #0f172a; }
+QToolTip { color: #1e293b; background: #fffbe6; border: 1px solid #c9d1dc; }
