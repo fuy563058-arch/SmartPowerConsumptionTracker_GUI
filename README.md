@@ -1,240 +1,191 @@
 # Smart Power Consumption Tracker
 
-A simple desktop app that shows how much electricity each appliance uses and how much it costs per month.
+A small desktop app that shows you which of your appliances is quietly eating your electric bill.
 
 ---
 
-## Project Description
+## 1. Project Description
 
-The Smart Power Consumption Tracker lets a user list their appliances, enter each appliance's wattage and daily hours of use, and then see the energy used (kWh) and the estimated monthly cost. It also gives a short tip on how much money can be saved by using an appliance 2 hours less per day.
+Most of us have no idea how much a single appliance adds to our monthly bill. We only see one big number when the bill arrives, and by then it's too late to do anything about it.
 
-**Problem it addresses:** Many households do not know which appliances use the most electricity, so they cannot tell where their bill comes from or what to reduce.
+The Smart Power Consumption Tracker fixes that. You type in each appliance, how many watts it uses, and how many hours a day you run it. The app then works out how much electricity it uses per day and per month, and how much that costs you in pesos. It also gives you simple tips on how to save.
 
-## Project Objectives
+Everything is saved on your computer, so your appliances are still there the next time you open the app.
 
-1. Save appliances with their wattage and hours used per day.
-2. Compute daily kWh, monthly kWh and monthly cost automatically.
-3. Let the user search, sort, update and delete appliances.
-4. Show an energy-saving suggestion for each appliance.
-5. Keep all data in a database so it is still there after closing the app.
+## 2. Project Objectives
 
-## Features
+What we wanted this project to do:
+
+- Let a user **add, view, search, update and delete** appliances (full CRUD).
+- **Calculate** daily and monthly energy use (kWh) and cost (₱) for each appliance and for all appliances together.
+- Let the user choose the **electricity rate** that applies to every appliance, and recalculate everything when it changes.
+- Give **energy-saving suggestions** in plain language.
+- **Save data** so nothing is lost when the app closes.
+- Practice clean, layered code using **object-oriented programming**.
+
+## 3. Features
 
 | Feature | What it does |
 |---|---|
-| Add Appliance | Saves a new appliance and shows its daily kWh, monthly kWh and monthly cost |
-| View All | Clears any search and shows every appliance |
-| Search | Finds appliances by part of the name (not case-sensitive) |
-| Sort by | Orders the table by date added, name, highest/lowest monthly cost, or highest wattage |
-| Update Appliance | Edits the selected appliance |
-| Delete Appliance | Removes the selected appliance after asking for confirmation |
-| Cost calculation | Daily kWh, monthly kWh and monthly cost for each appliance, plus totals |
-| Energy suggestion | Shows how much is saved if the selected appliance is used 2 hours less per day |
-| Electricity rate | The price per kWh can be changed and is remembered the next time the app opens |
+| **Add / Update / Delete** | Manage appliances with a simple form. Bad input (like 0 watts or 30 hours a day) is rejected with a clear message. |
+| **Search and sort** | Find an appliance by name. Sort by date added, name, highest or lowest cost, or highest wattage. |
+| **Daily and monthly figures** | Daily kWh, monthly kWh, daily cost, monthly cost and each appliance's share (%) of the bill. |
+| **Electricity Rate for All Appliances** | Pick *Custom Rate*, *Philippines (PH) Rate* or *Other Rates*. Click **Apply Rate** and every cost updates. |
+| **Dashboard** | Overall totals (wattage, hours, kWh, cost), the full appliance table and a sort option. |
+| **Energy tips** | Click an appliance to see how much you'd save by using it 2 hours less per day. The **Overall Suggestion** button gives advice for all appliances together. |
+| **Saved settings** | The chosen rate is remembered between runs. |
 
-**Formulas used**
-- Daily kWh = (watts × hours) ÷ 1000
-- Monthly kWh = daily kWh × 30
-- Monthly cost = monthly kWh × rate per kWh
+## 4. Technologies Used
 
-## Technologies Used
+- **Language:** Python 3
+- **GUI framework:** PyQt6
+- **Database:** SQLite (through Python's built-in `sqlite3`)
+- **Styling:** Qt style sheet (`style.qss`)
+- No other libraries are needed.
 
-| Item | Used |
-|---|---|
-| Programming language | Python 3.10 or newer |
-| GUI framework | PyQt6 |
-| Database | SQLite (built into Python, `sqlite3` module) |
-| Other tools | `unittest` (testing), `dataclasses`, `contextlib` (all built into Python) |
-
-## Project Structure
+## 5. Project Structure
 
 ```
-Smart_Power_Tracker/
-├── main.py                     # Starts the application
-├── style.qss                   # Colors and look of the window
-├── requirements.txt            # Dependencies (PyQt6)
-├── power.db                    # SQLite database (created automatically on first run)
+SmartPowerTracker_GUI/
+├── main.py                      # Starts the app: opens the database, loads the style, shows the window
+├── style.qss                    # Colors and look of the app
 ├── database/
-│   └── database.py             # Database class: connection, tables, saved settings
-├── features/
-│   └── Appliances/
-│       ├── model.py            # Appliance class (data + validation)
-│       ├── repository.py       # ApplianceRepository: all SQL queries
-│       ├── service.py          # ApplianceService: calculations, search, sort
-│       └── view.py             # ApplianceView: the PyQt window
-├── tests/
-│   └── test_service.py         # Automated tests for the database and logic
-└── screenshots/                # Images used in this README
+│   ├── database.py              # Connects to SQLite, creates the tables, saves settings
+│   └── power.db                 # The database file (created automatically)
+└── features/
+    └── Appliance/
+        ├── model.py             # The Appliance class and its validation rules
+        ├── repository.py        # All the SQL for appliances (add, list, search, update, delete)
+        ├── services.py          # The calculations, the rate options and the energy tips
+        ├── appliance_table.py   # The table shared by the Dashboard and the Appliances page
+        ├── view.py              # The Appliances page (form, rate box, list)
+        └── dashboard.py         # The Dashboard page (totals, table, suggestions)
 ```
 
-The code is split into layers. Each layer only talks to the next one:
+The code is split into layers so each file has one job:
 
-**View (window) → Service (logic) → Repository (SQL) → Database (SQLite file)**
+**View → Service → Repository → Database**
 
-## Installation and Setup
+The screens only talk to the service. The service does the thinking. The repository is the only place that writes SQL.
 
-1. **Install Python 3.10 or newer** from https://www.python.org (tick "Add Python to PATH" on Windows).
-2. **Download the project** and open a terminal inside the `Smart_Power_Tracker` folder:
-   ```
-   git clone <your-repository-link>
-   cd Smart_Power_Tracker
-   ```
-3. **(Optional) create a virtual environment:**
-   ```
-   python -m venv .venv
-   .venv\Scripts\activate        # Windows
-   source .venv/bin/activate     # macOS / Linux
-   ```
-4. **Install the dependency:**
-   ```
-   pip install -r requirements.txt
-   ```
-5. **Run the app:**
-   ```
-   python main.py
-   ```
-   The file `power.db` is created automatically the first time the app runs.
+## 6. Installation and Setup
 
-## How to Use the System
+1. Install **Python 3.10 or newer** (the code uses the `int | None` type style).
+2. Install PyQt6:
+   ```
+   pip install PyQt6
+   ```
+3. Open a terminal in the folder that **contains** `SmartPowerTracker_GUI` and run:
+   ```
+   python -m SmartPowerTracker_GUI.main
+   ```
+4. The database file is created automatically on the first run. You don't need to set anything up.
 
-1. **Add an appliance:** type the name, set the wattage and hours used per day, then click **Add Appliance**. A message shows its daily kWh, monthly kWh and monthly cost.
-2. **Set the electricity rate:** change the "Electricity rate" box (default ₱12.00 per kWh). Costs update right away.
-3. **View all appliances:** click **View All** to show the full list.
-4. **Search:** type part of a name in the search box and click **Search** (or press Enter).
-5. **Sort:** choose an option in the **Sort by** box.
-6. **See an energy tip:** click a row in the table. The green panel at the bottom shows the suggestion.
-7. **Update:** click a row, change the values in the form, then click **Update Appliance**.
-8. **Delete:** click a row, click **Delete Appliance**, then confirm with Yes.
-9. **Clear:** click **Clear** to empty the form.
+## 7. How to Use the System
 
-## OOP Implementation
+1. Open the **Appliances** tab.
+2. Under **Appliance Details**, type the name, wattage and hours used per day, then click **Add Appliance**.
+3. Under **Electricity Rate for All Appliances**, choose a rate type. If you pick *Custom Rate*, type your rate per kWh. Then click **Apply Rate**. Nothing changes until you click it.
+4. To change or remove an appliance, click it in the **Appliance List**, then use **Update Appliance** or **Delete Appliance**. Use **Clear Form** to start over.
+5. To find something, type in the search box, or use **Sort by**. **View All** brings back the full list.
+6. Open the **Dashboard** tab to see the overall totals. Click a row for a tip about that appliance, or press **Overall Suggestion** for advice about everything.
 
-| Class | Purpose |
+## 8. OOP Implementation
+
+**Important classes**
+
+| Class | Role |
 |---|---|
-| `Appliance` (`model.py`) | A `@dataclass` that holds name, watts, hours and id, and checks its own values |
-| `Database` (`database.py`) | Opens connections, creates tables, saves settings |
-| `ApplianceRepository` (`repository.py`) | Runs all SQL for the `appliances` table |
-| `ApplianceService` (`service.py`) | Calculations, search, sorting, energy tip, electricity rate |
-| `ApplianceView` (`view.py`) | The window and its buttons, fields and table |
+| `Appliance` (model.py) | One appliance: name, watts, hours and id |
+| `Database` (database.py) | Opens connections, creates tables, stores settings |
+| `ApplianceRepository` (repository.py) | Talks to the `appliances` table |
+| `ApplianceService` (services.py) | Calculations, rate options, tips |
+| `ApplianceView` (view.py) | The Appliances page |
+| `DashboardView` (dashboard.py) | The Dashboard page |
 
-**Objects:** `main.py` creates a `Database`, passes it to an `ApplianceService`, and passes that service to an `ApplianceView`. Each `Appliance` row is an object created from the form or from the database.
+**Encapsulation:** each class keeps its own job to itself. `Appliance` checks its own data when it is created, so an appliance with 0 watts can never exist. Only `ApplianceRepository` writes SQL. Only `ApplianceService` knows the formulas and the rate rules. The screens never touch the database directly.
 
-**Encapsulation:** each class keeps its own job and details inside it.
-- `Appliance` cleans and validates its own data in `__post_init__`.
-- Only `ApplianceRepository` contains SQL.
-- The view calls service methods and never touches the database directly.
+**Inheritance:** `ApplianceView` and `DashboardView` both inherit from PyQt's `QWidget`, so they get all the window and layout behavior for free.
 
-**Inheritance:** `ApplianceView` inherits from PyQt's `QWidget`, so it gets all the window behavior and calls `super().__init__()`.
+**Polymorphism:** this is used only lightly. Both pages are `QWidget`s, so the tab widget can show either one without knowing which is which. We did not write our own overridden methods, so we don't want to overstate it.
 
-**Polymorphism:** the entries in `SORT_OPTIONS` (in `service.py`) are different functions, but `sorted()` calls every one of them in the same way. PyQt widgets are also used through the same methods (for example `setEnabled`). The project does not define its own class hierarchy, so polymorphism here is limited.
+## 9. Database
 
-## Database
+The app uses one SQLite file, `power.db`, with two tables.
 
-The app uses SQLite. The file `power.db` is created automatically.
-
-**Table `appliances`**
+**`appliances`**
 
 | Column | Type | Rule |
 |---|---|---|
-| id | INTEGER | Primary key, auto-increment |
-| name | TEXT | Required |
-| watts | REAL | Required, must be greater than 0 |
-| hours | REAL | Required, greater than 0 and at most 24 |
+| `id` | INTEGER | Primary key, automatic |
+| `name` | TEXT | Required |
+| `watts` | REAL | Required, must be greater than 0 |
+| `hours` | REAL | Required, greater than 0 and at most 24 |
 
-**Table `settings`** stores the electricity rate.
+**`settings`** is a small key/value table for the chosen electricity rate (`rate_mode`, `rate_per_kwh`, `rate_other`, optionally `rate_ph`).
 
-| Column | Type | Rule |
-|---|---|---|
-| key | TEXT | Primary key (for example `rate_per_kwh`) |
-| value | TEXT | Required |
+**How each operation works** (all in `repository.py`)
 
-**Database operations**
+| Operation | What happens |
+|---|---|
+| **Create** | `INSERT INTO appliances ...` when you click Add Appliance |
+| **Read** | `SELECT ... FROM appliances ORDER BY id`, then the service sorts the list |
+| **Update** | `UPDATE appliances SET ... WHERE id = ?` |
+| **Delete** | `DELETE FROM appliances WHERE id = ?` (after a confirmation question) |
+| **Search** | `WHERE name LIKE ?`. Characters like `%` and `_` are escaped, so searching "50%" really looks for "50%" |
 
-| Operation | SQL | Method |
-|---|---|---|
-| Create | `INSERT INTO appliances (name, watts, hours) VALUES (?, ?, ?)` | `ApplianceRepository.add` |
-| Read | `SELECT id, name, watts, hours FROM appliances` | `ApplianceRepository.list_all` |
-| Search | `... WHERE name LIKE ?` | `ApplianceRepository.search` |
-| Update | `UPDATE appliances SET name=?, watts=?, hours=? WHERE id=?` | `ApplianceRepository.update` |
-| Delete | `DELETE FROM appliances WHERE id=?` | `ApplianceRepository.delete` |
-| Save rate | `INSERT ... ON CONFLICT DO UPDATE` on `settings` | `Database.set_setting` |
+If the database file is ever corrupted, the app moves it aside as a backup and creates a fresh one instead of crashing.
 
-Notes:
-- Queries use `?` placeholders so user input cannot break the SQL.
-- Each database action is wrapped in `with connection:`, which saves on success and undoes the change if an error happens.
-- Kilowatt-hours, cost and sort order are calculated in Python and are not stored, so they never go out of date when the rate changes.
-- If `power.db` is corrupted, the app renames it to `power.db.corrupt-<time>` and creates a new one.
+## 10. Screenshots
 
-## Screenshots
+> Replace the image paths below with your own screenshots.
 
-> Screenshots are stored in the `screenshots/` folder.
+| Screenshot | What it shows |
+|---|---|
+| `screenshots/dashboard.png` | The Dashboard with the overall totals, the table and the suggestion box |
+| `screenshots/appliances.png` | The Appliances page with the form, the rate box and the list |
+| `screenshots/add.png` | Adding a new appliance |
+| `screenshots/rate.png` | Choosing a rate and the "Not applied yet" note before clicking Apply Rate |
+| `screenshots/validation.png` | The error message when the input is not valid |
 
-**1. Main window** – the form, buttons, search and sort row, table and tip panel.
+## 11. Testing
 
+**Calculations.** Test appliance: Laptop, 200 W, 8 hours a day. The formulas are: daily kWh = (W × hours) ÷ 1000, monthly = daily × 30, cost = kWh × rate.
 
+| Test | Expected | Actual | Result |
+|---|---|---|---|
+| PH rate (₱ 12.00) | 1.600 kWh/day, 48.00 kWh/month, ₱ 19.20/day, ₱ 576.00/month | Same | Pass |
+| Custom rate ₱ 15.00 | ₱ 24.00/day, ₱ 720.00/month | Same | Pass |
+| Other rate "High rate" (₱ 14.00) | ₱ 22.40/day, ₱ 672.00/month | Same | Pass |
+| Energy tip for the laptop at ₱ 12.00 | 8 h → 6 h, saves ₱ 144.00 (12.0 kWh) a month | Same | Pass |
+| Energy tip for a 1-hour appliance | Says it can only be switched off completely | "Switching it off completely would save about ₱ 360.00 per month" (1000 W) | Pass |
 
-**2. Adding an appliance** – the message shown after clicking Add Appliance, with daily kWh, monthly kWh and monthly cost.
+**Input validation.**
 
+| Input | Expected | Actual | Result |
+|---|---|---|---|
+| Name with 1 character | Rejected | "Appliance name must have at least 2 characters." | Pass |
+| Wattage 0 | Rejected | "Wattage must be greater than 0." | Pass |
+| Hours 0 | Rejected | "Hours per day must be between 0 and 24." | Pass |
+| Hours 25 | Rejected | "Hours per day must be between 0 and 24." | Pass |
+| Wattage typed as text | Rejected | "Wattage and hours must be numbers." | Pass |
 
+**Rate behavior.** In a test run with the sample data, the saved rate stayed the same until Apply Rate was clicked. After that, the table and totals changed, and the new rate was still there when the app was started again. A rate saved by an older version of the app was kept as the Custom Rate.
 
-**3. Search and sort** – the table filtered by a search keyword and sorted by highest monthly cost.
+> The results above come from running the app's own model and service code. Please also do a quick manual run through each screen and add your own notes here.
 
+## 12. Known Issues / Limitations
 
+- **No history.** The app only stores the current list of appliances. It can't show how your usage changed from month to month.
+- **A month is always 30 days.** Monthly numbers are daily numbers × 30.
+- **"Other Rates" are examples** (Low ₱ 10, Standard ₱ 12, High ₱ 14). Edit `OTHER_RATES` in `services.py` to use real values. The PH rate is also a fixed number (`PH_RATE`, ₱ 12.00) and is not downloaded from any online source.
+- **"Total hours/day" adds every appliance's hours together**, so it can be more than 24.
+- **Names can repeat.** Two appliances can have the same name.
+- **Tips use one simple rule only:** use the appliance 2 hours less per day.
+- **Search works on the name only.**
+- **One user, one computer.** There are no accounts, and no way to export the data.
 
-**4. Selected appliance and energy tip** – a selected row loaded into the form, with the energy-saving tip at the bottom.
+## 13. Author
 
-
-
-**5. Database** – the `appliances` table inside `power.db`, showing the data is saved.
-
-
-
-## Testing
-
-**Automated tests** check the database and logic layers (no window needed). Run them with:
-
-```
-python -m unittest -v
-```
-
-| Test | Expected result | Actual result |
-|---|---|---|
-| Add three appliances, then view | All three are listed in the order added | Passed |
-| 1200 W for 8 h at ₱12/kWh | 9.6 kWh/day, 288 kWh/month, ₱3,456 | Passed |
-| Search "air" / search "zzz" | One match (Air Conditioner) / no results | Passed |
-| Sort by highest monthly cost | Air Conditioner, Fan, TV | Passed |
-| Update hours from 8 to 6 | Saved appliance shows 6 hours | Passed |
-| Delete one appliance | Only two appliances remain | Passed |
-| Name "A", watts 0, hours 25 | Each is rejected with an error | Passed |
-| Set rate to 15.5 | Rate is saved and read back as 15.5 | Passed |
-| Energy tip for 1200 W, 8 h | Says ₱864.00 is saved per month | Passed |
-
-**Manual tests of the window** (done by running `python main.py`):
-
-| Test | Expected result | Actual result |
-|---|---|---|
-| Click Add with a valid appliance | Message shows the cost, row appears in the table | _fill in_ |
-| Click Add with a one-letter name | Warning message, nothing saved | _fill in_ |
-| Click Add with wattage 0 | Warning message, nothing saved | _fill in_ |
-| Search "fan" then click View All | Table filters, then shows all rows again | _fill in_ |
-| Change the Sort by box | Table order changes | _fill in_ |
-| Select a row, change hours, click Update | Row shows the new hours and cost | _fill in_ |
-| Select a row, click Delete, choose Yes | Row is removed | _fill in_ |
-| Change the electricity rate | All costs change | _fill in_ |
-| Close and reopen the app | Appliances and rate are still there | _fill in_ |
-
-## Known Issues / Limitations
-
-- Each appliance has one fixed "hours per day" value. Daily changes in usage cannot be recorded.
-- A month is always counted as 30 days.
-- There is only one flat electricity rate (no tiered pricing).
-- Two appliances can have the same name.
-- Sorting uses the **Sort by** box only, not the column headers.
-- Delete cannot be undone.
-- There are no charts, no CSV export and no user login.
-- The automated tests cover the logic and database only. The window is tested by hand.
-
-## Author
-
-- **Name:** _Your Name_
-- **Section:** _Your Section_
+- **Name:** _[Your name]_
+- **Section:** _[Your section]_
