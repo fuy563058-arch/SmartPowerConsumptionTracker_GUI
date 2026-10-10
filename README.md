@@ -1,3 +1,4 @@
+<img width="731" height="229" alt="Screenshot 2026-10-10 225906" src="https://github.com/user-attachments/assets/77275caf-0f47-4d3e-8429-a9d7b9bd01d4" />
 # Smart Power Consumption Tracker
 
 A small desktop app that shows you which of your appliances is quietly eating your electric bill.
