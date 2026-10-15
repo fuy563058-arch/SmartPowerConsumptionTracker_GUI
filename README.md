@@ -175,8 +175,6 @@ If the database file is ever corrupted, the app moves it aside as a backup and c
 
 **Rate behavior.** In a test run with the sample data, the saved rate stayed the same until Apply Rate was clicked. After that, the table and totals changed, and the new rate was still there when the app was started again. A rate saved by an older version of the app was kept as the Custom Rate.
 
-> The results above come from running the app's own model and service code. Please also do a quick manual run through each screen and add your own notes here.
-
 ## 12. Known Issues / Limitations
 
 - **No history.** The app only stores the current list of appliances. It can't show how your usage changed from month to month.
