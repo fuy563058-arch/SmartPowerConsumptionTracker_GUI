@@ -45,22 +45,25 @@ What we wanted this project to do:
 
 ## 5. Project Structure
 
-```
-SmartPowerTracker_GUI/
-├── main.py                      # Starts the app: opens the database, loads the style, shows the window
-├── style.qss                    # Colors and look of the app
-├── database/
-│   ├── database.py              # Connects to SQLite, creates the tables, saves settings
-│   └── power.db                 # The database file (created automatically)
-└── features/
-    └── Appliance/
-        ├── model.py             # The Appliance class and its validation rules
-        ├── repository.py        # All the SQL for appliances (add, list, search, update, delete)
-        ├── services.py          # The calculations, the rate options and the energy tips
-        ├── appliance_table.py   # The table shared by the Dashboard and the Appliances page
-        ├── view.py              # The Appliances page (form, rate box, list)
-        └── dashboard.py         # The Dashboard page (totals, table, suggestions)
-```
+<img width="591" height="278" alt="Image" src="https://github.com/user-attachments/assets/de77f26c-56f1-4777-bd9d-6e66fdc0cb1a" />
+
+| File / Folder | Description |
+|---|---|
+| `SmartPowerTracker_GUI/` | Main project folder containing all application files. |
+| `main.py` | Starts the application, opens the database, loads the style, and displays the main window. |
+| `style.qss` | Defines the application's colors and visual design. |
+| `database/` | Contains the database-related files. |
+| `database/database.py` | Connects to SQLite, creates database tables, and saves settings. |
+| `database/power.db` | Stores application data. This file is created automatically. |
+| `features/` | Contains the application's features. |
+| `features/Appliance/` | Contains files for appliance management and energy information. |
+| `features/Appliance/model.py` | Defines the Appliance class and its validation rules. |
+| `features/Appliance/repository.py` | Handles SQL operations for adding, viewing, searching, updating, and deleting appliances. |
+| `features/Appliance/services.py` | Handles calculations, electricity rate options, and energy-saving tips. |
+| `features/Appliance/appliance_table.py` | Provides a shared appliance table for the Dashboard and Appliances page. |
+| `features/Appliance/view.py` | Displays the Appliances page, including the form, electricity rate box, and appliance list. |
+| `features/Appliance/dashboard.py` | Displays the Dashboard, including totals, the appliance table, and energy-saving suggestions. |
+
 
 The code is split into layers so each file has one job:
 
